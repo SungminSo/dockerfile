@@ -3,7 +3,6 @@ FROM golang:1.14-alpine AS builder
 ARG build_token
 ARG organization
 ARG repo_name
-ARG port
 
 RUN apk --update add ca-certificates git gcc musl-dev
 
@@ -28,6 +27,6 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifi
 
 ENV GIN_MODE=release
 
-EXPOSE $port
+EXPOSE 5000
 
 ENTRYPOINT ["/service"]
