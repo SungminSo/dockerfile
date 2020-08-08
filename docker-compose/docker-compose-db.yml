@@ -1,0 +1,23 @@
+version: '2.1'
+
+services:
+  redis:
+    image: redis:5.0.6
+    ports:
+      - "6379:6379"
+
+  postgresql:
+    image: gradescope/postgresql-multiple-databases
+    volumes:
+      - /tmp/docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES={service names} # 로컬에서 실행되는 서비스들의 이름을 , 로 구분해 입력하면 해당 데이터베이스를 생성해줍니다
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+
+  mongodb:
+    image: mongo:4.0-xenial
+    ports:
+      - "27017:27017"
